@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api";
+const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:4000/api";
 
 export type RoleName =
   | "OPEN_AREA"
@@ -26,7 +26,7 @@ export async function apiFetch<T>(path: string, options: RequestInit = {}): Prom
   };
   if (token) headers.Authorization = `Bearer ${token}`;
 
-  const response = await fetch(`${API_BASE}${path}`, { ...options, headers });
+  const response = await fetch(`${BASE_URL}${path}`, { ...options, headers });
   const contentType = response.headers.get("content-type") || "";
   if (!response.ok) {
     let message = `Request failed with ${response.status}`;
