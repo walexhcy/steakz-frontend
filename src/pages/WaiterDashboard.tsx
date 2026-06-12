@@ -37,6 +37,14 @@ export function WaiterDashboard() {
     return form.items.find(i => i.menuItemId === menuItemId)?.quantity ?? 0;
   }
 
+  async function markServed(orderId: string) {
+    try {
+      await api.updateOrderStatus(orderId, "SERVED");
+      setMessage("Order marked as served.");
+      load();
+    } catch (err: any) { setMessage(err.message); }
+  }
+
   async function submitOrder(e: FormEvent) {
     e.preventDefault();
     setMessage("");
@@ -120,7 +128,7 @@ export function WaiterDashboard() {
       <h2>Branch Orders</h2>
       <table>
         <thead>
-          <tr><th>Order #</th><th>Table</th><th>Customer</th><th>Status</th><th>Total</th></tr>
+          <tr><th>Order #</th><th>Table</th><th>Customer</th><th>Status</th><th>Total</th><th>Action</th></tr>
         </thead>
         <tbody>
           {orders.map(o => (
@@ -130,6 +138,11 @@ export function WaiterDashboard() {
               <td>{o.customer?.name ?? "—"}</td>
               <td>{o.status}</td>
               <td>£{Number(o.totalAmount).toFixed(2)}</td>
+              <td>
+                {o.status === "READY"
+                  ? <button onClick={() => markServed(o.id)}>Mark as Served</button>
+                  : <span>—</span>}
+              </td>
             </tr>
           ))}
         </tbody>

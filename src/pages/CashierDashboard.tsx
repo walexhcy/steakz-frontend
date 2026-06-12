@@ -37,7 +37,7 @@ export function CashierDashboard() {
   }
 
   function receiptAction(o: any) {
-    if (o.status === "PENDING" || o.status === "READY") {
+    if (o.status === "SERVED") {
       if (confirming === o.id) {
         return (
           <span style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
