@@ -64,5 +64,6 @@ export const api = {
     apiFetch<any>("/orders", { method: "POST", body: JSON.stringify(data) }),
   receipts: () => apiFetch<any[]>("/receipts"),
   createReceipt: (orderId: string) => apiFetch<any>("/receipts", { method: "POST", body: JSON.stringify({ orderId, paymentMethod: "CARD" }) }),
-  receiptPdf: (receiptId: string) => apiFetch<Blob>(`/receipts/${receiptId}/pdf`)
+  receiptPdf: (receiptId: string) => apiFetch<Blob>(`/receipts/${receiptId}/pdf`),
+  reportPdf: () => apiFetch<Blob>("/reports/orders/pdf")
 };
